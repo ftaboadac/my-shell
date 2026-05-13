@@ -15,7 +15,7 @@ def main():
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
             else:
-                continue
+                print(f"{command}: command not found")
         else:
             print(f"{command}: command not found")
 
