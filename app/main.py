@@ -34,7 +34,6 @@ def main():
             path_to_file = is_exec(parts[0], folders)
 
             if path_to_file:
-                print([path_to_file] + parts[1:])
                 result = subprocess.run([path_to_file] + parts[1:],capture_output=True,text=True)
                 print(result.stdout)
             else:
