@@ -33,7 +33,7 @@ def main():
         elif parts[0] not in commands:
             path_to_file = is_exec(parts[0], folders)
             if path_to_file:
-                result = subprocess.run([str(parts[0],str(parts[1]),str(parts[2]))],capture_output=True,text=True)
+                result = subprocess.run([str(parts[0],str(parts[1]))],capture_output=True,text=True)
                 print(result.stdout)
             else:
                 print(f"{command}: command not found")
