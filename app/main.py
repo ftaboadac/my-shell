@@ -22,11 +22,10 @@ def main():
                     if os.path.isdir(folder):
                         path_to_file = os.path.join(folder,parts[1])
                         if os.path.exists(path_to_file) and os.access(path_to_file, os.X_OK):
-                                print(f"{parts[1]} is {path_to_file}")
-                                break
+                            return print(f"{parts[1]} is {path_to_file}")
                         else:
                             continue
-                    print(f"{parts[1]}: not found")
+                print(f"{parts[1]}: not found")
         else:
             print(f"{command}: command not found")
 
