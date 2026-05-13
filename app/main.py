@@ -36,7 +36,7 @@ def main():
 
             if path_to_file:
                 result = subprocess.run([parts[0]] + parts[1:],capture_output=True,text=True)
-                print(result.stdout)
+                print(result.stdout, end="")
             else:
                 print(f"{command}: command not found")
 
