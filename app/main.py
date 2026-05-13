@@ -18,14 +18,16 @@ def main():
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
             else:
+                found = False
                 for folder in folders:
                     if os.path.isdir(folder):
                         path_to_file = os.path.join(folder,parts[1])
                         if os.path.exists(path_to_file) and os.access(path_to_file, os.X_OK):
                             print(f"{parts[1]} is {path_to_file}")
-                        else:
-                            continue
-                print(f"{parts[1]}: not found")
+                            false = True
+                            break
+                if not found:
+                  print(f"{parts[1]}: not found")
         else:
             print(f"{command}: command not found")
 
