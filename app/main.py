@@ -6,6 +6,7 @@ import subprocess
 def main():
     while True:
         sys.stdout.write("$ ")
+        sys.stdout.flush()
         command = input()
         commands = ['echo','exit','type']
         parts = command.split()
