@@ -35,7 +35,7 @@ def main():
             path_to_file = is_exec(parts[0], folders)
 
             if path_to_file:
-                result = subprocess.run([parts[0]] + parts[1:],capture_output=True,text=True)
+                result = subprocess.run([path_to_file] + parts[1:],capture_output=True,text=True)
                 print(result.stdout)
             else:
                 print(f"{command}: command not found")
