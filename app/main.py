@@ -1,5 +1,7 @@
 import sys
 import os
+import subprocess
+
 
 def main():
     while True:
@@ -28,8 +30,22 @@ def main():
                             break
                 if not found:
                   print(f"{parts[1]}: not found")
-        else:
-            print(f"{command}: command not found")
+        elif parts[0] not in commands:
+            path_to_file = is_exec(parts[0], folders)
+            if path_to_file:
+                result = subprocess.run([str(parts[0],str(parts[1]),str(parts[2]))],capture_output=True,text=True)
+                print(result.stdout)
+            else:
+                print(f"{command}: command not found")
+
+
+def is_exec(part, folders):
+    for folder in folders:
+        if os.path.isdir(folder):
+            path_to_file = os.path.join(folder,part)
+            if os.path.exists(path_to_file) and os.access(path_to_file, os.X_OK):
+                return path_to_file
+    return None
 
 if __name__ == "__main__":
     main()
