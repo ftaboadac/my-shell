@@ -26,7 +26,7 @@ def main():
             cd_path = parts[1]
             if cd_path == '~':
                 os.chdir(home)
-            if os.path.isdir(cd_path):
+            elif os.path.isdir(cd_path):
                 os.chdir(cd_path)
             else:
                 print(f"cd: {cd_path}: No such file or directory")
