@@ -20,8 +20,8 @@ def main():
             break
         elif command.startswith("echo"):
             output = command[5:]
-            
-
+            if output.startswith("'") and output.endswith("'"):
+                print('hola')
             print(output)
 
         elif command == "pwd":
