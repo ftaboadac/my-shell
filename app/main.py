@@ -9,7 +9,7 @@ def main():
         sys.stdout.write("$ ")
         sys.stdout.flush()
         command = input()
-        commands = ['echo','exit','type','pwd']
+        commands = ['echo','exit','type','pwd','cd']
         parts = command.split()
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
@@ -21,6 +21,12 @@ def main():
             print(command[5:])
         elif command == "pwd":
             print(cwd)
+        elif command.startswith("cd"):
+            cd_path = parts[1]
+            if cd_path.startswith("/") and os.path.isdir(cd_path):
+                os.chdir(cd_path)
+            else:
+                print(f"cd: {}: No such file or directory")
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
