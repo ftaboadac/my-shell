@@ -20,10 +20,7 @@ def main():
             break
         elif command.startswith("echo"):
             output = command[5:]
-            if output.startswith("'") and output.endswith("'"):
-                print(f"{output}")
-            print(output)
-
+            print(parse(output))
         elif command == "pwd":
             print(cwd)
         elif command.startswith("cd"):
@@ -65,6 +62,27 @@ def is_exec(part, folders):
             if os.path.exists(path_to_file) and os.access(path_to_file, os.X_OK):
                 return path_to_file
     return None
+
+def parse(line):
+    tokens = []:
+    current = ""
+    in_single = False
+
+    for char in line:
+        if char == "'" and not in_single:
+            in_single = True
+        elif char == "'" and in_single:
+            in_single = False
+        elif char == " " and not in_single:
+            if current:
+                tokens.append(current)
+                current = ""
+        else:
+            current += char
+
+    if current:
+        tokens.append(current)    
+    return tokens
 
 if __name__ == "__main__":
     main()
