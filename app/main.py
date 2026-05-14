@@ -20,7 +20,8 @@ def main():
         elif command.startswith("echo"):
             print(command[5:])
         elif command == "pwd"
-            print(f"pwd is a shell builtin")
+            print("pwd is a shell builtin")
+            print(cwd)
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
