@@ -5,18 +5,22 @@ import subprocess
 
 def main():
     while True:
+
         sys.stdout.write("$ ")
         sys.stdout.flush()
         command = input()
-        commands = ['echo','exit','type']
+        commands = ['echo','exit','type','pwd']
         parts = command.split()
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
-
+        cwd = os.getcwd()
+    
         if command == "exit":
             break
         elif command.startswith("echo"):
             print(command[5:])
+        elif command == "pwd"
+            print(f"pwd is a shell builtin")
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
