@@ -23,7 +23,7 @@ def main():
             print(cwd)
         elif command.startswith("cd"):
             cd_path = parts[1]
-            if cd_path.startswith("/") and os.path.isdir(cd_path):
+            if os.path.isdir(cd_path):
                 os.chdir(cd_path)
             else:
                 print(f"cd: {cd_path}: No such file or directory")
