@@ -21,7 +21,7 @@ def main():
         elif command.startswith("echo"):
             output = command[5:]
             if output.startswith("'") and output.endswith("'"):
-                print(f"'{output}'")
+                print(f"{output}")
             print(output)
 
         elif command == "pwd":
