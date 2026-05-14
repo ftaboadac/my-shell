@@ -19,8 +19,7 @@ def main():
             break
         elif command.startswith("echo"):
             print(command[5:])
-        elif command == "pwd"
-            print("pwd is a shell builtin")
+        elif command == "pwd":
             print(cwd)
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
