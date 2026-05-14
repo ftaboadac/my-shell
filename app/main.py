@@ -26,7 +26,7 @@ def main():
             if cd_path.startswith("/") and os.path.isdir(cd_path):
                 os.chdir(cd_path)
             else:
-                print(f"cd: {}: No such file or directory")
+                print(f"cd: {cd_path}: No such file or directory")
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
