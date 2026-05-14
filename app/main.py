@@ -19,7 +19,11 @@ def main():
         if command == "exit":
             break
         elif command.startswith("echo"):
-            print(command[5:])
+            output = command[5:]
+            
+
+            print(output)
+
         elif command == "pwd":
             print(cwd)
         elif command.startswith("cd"):
