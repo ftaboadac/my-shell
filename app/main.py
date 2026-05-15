@@ -21,7 +21,7 @@ def main():
         elif command.startswith("echo"):
             output = command[5:]
             tokens = parse(output)
-            print(tokens[0])
+            print(" ".join(tokens))
         elif command == "pwd":
             print(cwd)
         elif command.startswith("cd"):
