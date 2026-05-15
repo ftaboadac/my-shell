@@ -10,7 +10,7 @@ def main():
         sys.stdout.flush()
         command = input()
         commands = ['echo','exit','type','pwd','cd']
-        parts = command.split()
+        parts = parse(command)
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
         cwd = os.getcwd()
