@@ -68,13 +68,20 @@ def parse(line):
     tokens = []
     current = ""
     in_single = False
+    in_double = False
 
     for char in line:
-        if char == "'" and not in_single:
+
+        if char == "'" and not in_single and not in_double:
             in_single = True
+        elif char == '"' and not in_double and not in_single:
+            in_double = True            
         elif char == "'" and in_single:
             in_single = False
-        elif char == " " and not in_single:
+        elif char == '"' and in_double:
+            in_double = False   
+
+        elif char == " " and not in_single and not in_double:
             if current:
                 tokens.append(current)
                 current = ""
