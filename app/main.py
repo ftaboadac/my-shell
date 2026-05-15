@@ -64,7 +64,7 @@ def is_exec(part, folders):
     return None
 
 def parse(line):
-    tokens = []:
+    tokens = []
     current = ""
     in_single = False
 
