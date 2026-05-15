@@ -69,13 +69,16 @@ def parse(line):
     current = ""
     in_single = False
     in_double = False
+    escape_next = False
 
     for char in line:
-        escape_next = False
 
-        if char == "'" and not in_single and not in_double and not escape_next:
+        if escape_next:
+            current += char
+            escape_next = False
+        elif char == "'" and not in_single and not in_double:
             in_single = True
-        elif char == '"' and not in_double and not in_single and not escape_next:
+        elif char == '"' and not in_double and not in_single:
             in_double = True            
         elif char == "'" and in_single:
             in_single = False
@@ -84,7 +87,7 @@ def parse(line):
         elif char == "\\" and not in_double and not in_single:
             char = ""
             escape_next = True
-        elif char == " " and not in_single and not in_double and not escape_next:
+        elif char == " " and not in_single and not in_double:
             if current:
                 tokens.append(current)
                 current = ""
