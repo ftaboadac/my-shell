@@ -20,7 +20,8 @@ def main():
             break
         elif command.startswith("echo"):
             output = command[5:]
-            print(parse(output))
+            tokens = parse(output)
+            print(tokens[0])
         elif command == "pwd":
             print(cwd)
         elif command.startswith("cd"):
