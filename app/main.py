@@ -90,7 +90,6 @@ def parse(line):
         elif char == " " and not in_single and not in_double:
             if current:
                 tokens.append(current)
-                current = ""
         else:
             current += char
 
