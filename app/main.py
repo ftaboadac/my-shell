@@ -74,8 +74,8 @@ def parse(line):
     for char in line:
 
         if escape_next:
-            if (char == "\\" or char == '"') and in_double:
-                print("banana")
+            #if (char == "\\" or char == '"') and in_double:
+                
             current += char
             escape_next = False
         elif char == "'" and not in_single and not in_double:
