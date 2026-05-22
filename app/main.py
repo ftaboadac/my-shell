@@ -143,7 +143,7 @@ def parse_redirects(tokens):
 
             return before, after[0], mode
 
-  return tokens, None, mode
+    return tokens, None, mode
 
     # if '>' in tokens:
     #     index = tokens.index('>')
