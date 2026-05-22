@@ -136,8 +136,9 @@ def parse_redirects(tokens):
 
         before = tokens[:index]
         after = tokens[index + 1:]
-
-        return before, after[0], error_mode = True
+        error_mode = True
+        
+        return before, after[0], error_mode
 
     else:
         return tokens, None
