@@ -147,53 +147,6 @@ def parse_redirects(tokens):
 
     return tokens, None, mode
 
-    # if '>' in tokens:
-    #     index = tokens.index('>')
-
-    #     before = tokens[:index]
-    #     after = tokens[index + 1:]
-
-    #     return before, after[0], mode
-
-    # if '1>' in tokens:
-    #     index = tokens.index('1>')
-
-    #     before = tokens[:index]
-    #     after = tokens[index + 1:]
-
-    #     return before, after[0], mode
-
-    # if '>>' in tokens:
-    #     index = tokens.index('>>')
-
-    #     before = tokens[:index]
-    #     after = tokens[index + 1:]
-    #     mode = 'append'
-
-    #     return before, after[0], mode
-
-    # if '1>>' in tokens:
-    #     index = tokens.index('1>>')
-
-    #     before = tokens[:index]
-    #     after = tokens[index + 1:]
-    #     mode = 'append'
-
-    #     return before, after[0], mode
-
-    # if '2>' in tokens:
-    #     index = tokens.index('2>')
-
-    #     before = tokens[:index]
-    #     after = tokens[index + 1:]
-    #     mode = 'error'
-
-    #     return before, after[0], mode
-
-    # else:
-    #     return tokens, None, mode
-
-
 
 if __name__ == "__main__":
     main()
