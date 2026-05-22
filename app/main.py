@@ -11,16 +11,21 @@ def main():
         command = input()
         commands = ['echo','exit','type','pwd','cd']
         parts = parse(command)
-        parts, redirect_target = parse_redirects(parts)
+        parts, redirect_target, error_mode = parse_redirects(parts)
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
         cwd = os.getcwd()
         home = os.getenv('HOME')
 
-        if redirect_target:
+        if redirect_target and not error_mode:
             out = open(redirect_target, 'w')
         else:
             out = None
+
+        if redirect_target and error_mode:
+            out_err = open(redirect_target, 'w')
+        else:
+            out_err = None
 
         if command == "exit":
             break
@@ -38,7 +43,7 @@ def main():
             elif os.path.isdir(cd_path):
                 os.chdir(cd_path)
             else:
-                print(f"cd: {cd_path}: No such file or directory")
+                print(f"cd: {cd_path}: No such file or directory", file=out_err)
 
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
@@ -53,13 +58,13 @@ def main():
                             found = True
                             break
                 if not found:
-                  print(f"{parts[1]}: not found")
+                  print(f"{parts[1]}: not found", file=out_err)
                
         elif parts[0] not in commands:
             path_to_file = is_exec(parts[0], folders)
 
             if path_to_file:
-                result = subprocess.run([parts[0]] + parts[1:],text=True, stdout=out)
+                result = subprocess.run([parts[0]] + parts[1:],text=True, stdout=out, stderr=out_err)
             else:
                 print(f"{command}: command not found")
 
@@ -125,6 +130,14 @@ def parse_redirects(tokens):
         after = tokens[index + 1:]
 
         return before, after[0]
+
+    if '2>' in tokens:
+        index = tokens.index('2>')
+
+        before = tokens[:index]
+        after = tokens[index + 1:]
+
+        return before, after[0], error_mode = True
 
     else:
         return tokens, None
