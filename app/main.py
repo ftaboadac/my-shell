@@ -133,7 +133,7 @@ def parse_redirects(tokens):
         return before, after[0], error_mode
 
     if '>>' in tokens:
-        index = tokens.index('1>')
+        index = tokens.index('>>')
 
         before = tokens[:index]
         after = tokens[index + 1:]
@@ -141,7 +141,7 @@ def parse_redirects(tokens):
         return before, after[0], error_mode
 
     if '1>>' in tokens:
-        index = tokens.index('1>')
+        index = tokens.index('1>>')
 
         before = tokens[:index]
         after = tokens[index + 1:]
