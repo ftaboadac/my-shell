@@ -20,15 +20,13 @@ def main():
         if redirect_target:
             out = open(redirect_target, 'w')
         else:
-            None
+            out = None
 
         if command == "exit":
             break
 
         elif command.startswith("echo"):
-            output = command[5:]
-            tokens = parse(output)
-            print(" ".join(tokens), file=out)
+            print(" ".join(parts[1:]), file=out)
 
         elif command == "pwd":
             print(cwd, file=out)
