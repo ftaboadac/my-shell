@@ -132,6 +132,22 @@ def parse_redirects(tokens):
 
         return before, after[0], error_mode
 
+    if '>>' in tokens:
+        index = tokens.index('1>')
+
+        before = tokens[:index]
+        after = tokens[index + 1:]
+
+        return before, after[0], error_mode
+
+    if '1>>' in tokens:
+        index = tokens.index('1>')
+
+        before = tokens[:index]
+        after = tokens[index + 1:]
+
+        return before, after[0], error_mode
+
     if '2>' in tokens:
         index = tokens.index('2>')
 
