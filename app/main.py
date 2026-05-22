@@ -11,19 +11,29 @@ def main():
         command = input()
         commands = ['echo','exit','type','pwd','cd']
         parts = parse(command)
+        parts, redirect_target = parse_redirects(parts)
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
         cwd = os.getcwd()
         home = os.getenv('HOME')
 
+        if redirect_target:
+            out = open(redirect_target, 'w')
+        else:
+            None
+
         if command == "exit":
             break
+
         elif command.startswith("echo"):
             output = command[5:]
             tokens = parse(output)
-            print(" ".join(tokens))
+            if 
+            print(" ".join(tokens), file=out)
+
         elif command == "pwd":
-            print(cwd)
+            print(cwd, file=out)
+
         elif command.startswith("cd"):
             cd_path = parts[1]
             if cd_path == '~':
@@ -32,6 +42,7 @@ def main():
                 os.chdir(cd_path)
             else:
                 print(f"cd: {cd_path}: No such file or directory")
+
         elif command.startswith("type"):
             if len(parts) > 1 and parts[1] in commands:
                 print(f"{parts[1]} is a shell builtin")
@@ -46,16 +57,18 @@ def main():
                             break
                 if not found:
                   print(f"{parts[1]}: not found")
+               
         elif parts[0] not in commands:
             path_to_file = is_exec(parts[0], folders)
 
             if path_to_file:
-                result = subprocess.run([parts[0]] + parts[1:],capture_output=True,text=True)
-                print(result.stdout, end="")
+                result = subprocess.run([parts[0]] + parts[1:],text=True, stdout=out)
             else:
                 print(f"{command}: command not found")
 
-
+        if out:
+            out.close()
+            
 def is_exec(part, folders):
     for folder in folders:
         if os.path.isdir(folder):
@@ -96,6 +109,30 @@ def parse(line):
     if current:
         tokens.append(current)    
     return tokens
+
+
+def parse_redirects(tokens):
+
+    if '>' in tokens:
+        index = tokens.index('>')
+
+        before = tokens[:index]
+        after = tokens[index + 1:]
+
+        return before, after[0]
+
+    if '1>' in tokens:
+        index = tokens.index('1>')
+
+        before = tokens[:index]
+        after = tokens[index + 1:]
+
+        return before, after[0]
+
+    else:
+        return tokens, None
+
+
 
 if __name__ == "__main__":
     main()
