@@ -17,7 +17,7 @@ def main():
         cwd = os.getcwd()
         home = os.getenv('HOME')
 
-        if redirect_target and mode == None:
+        if redirect_target and mode == 'write':
             out = open(redirect_target, 'w')
         elif redirect_target and mode == 'append':
             out = open(redirect_target, 'a')    
@@ -26,6 +26,10 @@ def main():
 
         if redirect_target and mode == 'error':
             out_err = open(redirect_target, 'w')
+        else:
+            out_err = None
+        if redirect_target and mode == 'error_append':
+            out_err = open(redirect_target, 'a')
         else:
             out_err = None
 
@@ -116,53 +120,76 @@ def parse(line):
 
 
 def parse_redirects(tokens):
+    operators = {
+    '>':   'write',
+    '1>':  'write',
+    '>>':  'append',
+    '1>>': 'append',
+    '2>':  'error',
+    '2>>': 'error_append'
+    }
+
     mode = None
 
-    if '>' in tokens:
-        index = tokens.index('>')
+    for operator in operators:
+        if operator in tokens:
 
-        before = tokens[:index]
-        after = tokens[index + 1:]
+            index = tokens.index(operator)
 
-        return before, after[0], mode
+            before = tokens[:index]
+            after = tokens[index + 1:]
 
-    if '1>' in tokens:
-        index = tokens.index('1>')
+            mode = operators[operator]
 
-        before = tokens[:index]
-        after = tokens[index + 1:]
+            return before, after[0], mode
 
-        return before, after[0], mode
+  return tokens, None, mode
 
-    if '>>' in tokens:
-        index = tokens.index('>>')
+    # if '>' in tokens:
+    #     index = tokens.index('>')
 
-        before = tokens[:index]
-        after = tokens[index + 1:]
-        mode = 'append'
+    #     before = tokens[:index]
+    #     after = tokens[index + 1:]
 
-        return before, after[0], mode
+    #     return before, after[0], mode
 
-    if '1>>' in tokens:
-        index = tokens.index('1>>')
+    # if '1>' in tokens:
+    #     index = tokens.index('1>')
 
-        before = tokens[:index]
-        after = tokens[index + 1:]
-        mode = 'append'
+    #     before = tokens[:index]
+    #     after = tokens[index + 1:]
 
-        return before, after[0], mode
+    #     return before, after[0], mode
 
-    if '2>' in tokens:
-        index = tokens.index('2>')
+    # if '>>' in tokens:
+    #     index = tokens.index('>>')
 
-        before = tokens[:index]
-        after = tokens[index + 1:]
-        mode = 'error'
+    #     before = tokens[:index]
+    #     after = tokens[index + 1:]
+    #     mode = 'append'
 
-        return before, after[0], mode
+    #     return before, after[0], mode
 
-    else:
-        return tokens, None, mode
+    # if '1>>' in tokens:
+    #     index = tokens.index('1>>')
+
+    #     before = tokens[:index]
+    #     after = tokens[index + 1:]
+    #     mode = 'append'
+
+    #     return before, after[0], mode
+
+    # if '2>' in tokens:
+    #     index = tokens.index('2>')
+
+    #     before = tokens[:index]
+    #     after = tokens[index + 1:]
+    #     mode = 'error'
+
+    #     return before, after[0], mode
+
+    # else:
+    #     return tokens, None, mode
 
 
 
