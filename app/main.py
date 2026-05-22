@@ -11,18 +11,20 @@ def main():
         command = input()
         commands = ['echo','exit','type','pwd','cd']
         parts = parse(command)
-        parts, redirect_target, error_mode = parse_redirects(parts)
+        parts, redirect_target, mode = parse_redirects(parts)
         path = os.environ['PATH']
         folders = path.split(os.pathsep)
         cwd = os.getcwd()
         home = os.getenv('HOME')
 
-        if redirect_target and not error_mode:
+        if redirect_target and mode == None:
             out = open(redirect_target, 'w')
+        if redirect_target and mode == 'append':
+            out = open(redirect_target, 'a')    
         else:
             out = None
 
-        if redirect_target and error_mode:
+        if redirect_target and mode == 'error':
             out_err = open(redirect_target, 'w')
         else:
             out_err = None
@@ -114,7 +116,7 @@ def parse(line):
 
 
 def parse_redirects(tokens):
-    error_mode = False
+    mode = None
 
     if '>' in tokens:
         index = tokens.index('>')
@@ -122,7 +124,7 @@ def parse_redirects(tokens):
         before = tokens[:index]
         after = tokens[index + 1:]
 
-        return before, after[0], error_mode
+        return before, after[0], mode
 
     if '1>' in tokens:
         index = tokens.index('1>')
@@ -130,35 +132,37 @@ def parse_redirects(tokens):
         before = tokens[:index]
         after = tokens[index + 1:]
 
-        return before, after[0], error_mode
+        return before, after[0], mode
 
     if '>>' in tokens:
         index = tokens.index('>>')
 
         before = tokens[:index]
         after = tokens[index + 1:]
+        mode = 'append'
 
-        return before, after[0], error_mode
+        return before, after[0], mode
 
     if '1>>' in tokens:
         index = tokens.index('1>>')
 
         before = tokens[:index]
         after = tokens[index + 1:]
+        mode = 'append'
 
-        return before, after[0], error_mode
+        return before, after[0], mode
 
     if '2>' in tokens:
         index = tokens.index('2>')
 
         before = tokens[:index]
         after = tokens[index + 1:]
-        error_mode = True
+        mode = 'error'
 
-        return before, after[0], error_mode
+        return before, after[0], mode
 
     else:
-        return tokens, None, error_mode
+        return tokens, None, mode
 
 
 
