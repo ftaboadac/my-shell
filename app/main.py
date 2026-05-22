@@ -19,7 +19,7 @@ def main():
 
         if redirect_target and mode == None:
             out = open(redirect_target, 'w')
-        if redirect_target and mode == 'append':
+        elif redirect_target and mode == 'append':
             out = open(redirect_target, 'a')    
         else:
             out = None
