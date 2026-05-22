@@ -17,22 +17,23 @@ def main():
         cwd = os.getcwd()
         home = os.getenv('HOME')
 
+        #stdout
         if redirect_target and mode == 'write':
             out = open(redirect_target, 'w')
         elif redirect_target and mode == 'append':
             out = open(redirect_target, 'a')    
         else:
             out = None
-
+        
+        #stderr
         if redirect_target and mode == 'error':
             out_err = open(redirect_target, 'w')
-        else:
-            out_err = None
-        if redirect_target and mode == 'error_append':
+        elif redirect_target and mode == 'error_append':
             out_err = open(redirect_target, 'a')
         else:
             out_err = None
 
+        #built in commands
         if command == "exit":
             break
 
@@ -65,7 +66,8 @@ def main():
                             break
                 if not found:
                   print(f"{parts[1]}: not found", file=out_err)
-               
+
+        #non built-in commands 
         elif parts[0] not in commands:
             path_to_file = is_exec(parts[0], folders)
 
