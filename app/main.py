@@ -28,7 +28,6 @@ def main():
         elif command.startswith("echo"):
             output = command[5:]
             tokens = parse(output)
-            if 
             print(" ".join(tokens), file=out)
 
         elif command == "pwd":
@@ -68,7 +67,7 @@ def main():
 
         if out:
             out.close()
-            
+
 def is_exec(part, folders):
     for folder in folders:
         if os.path.isdir(folder):
