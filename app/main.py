@@ -1,6 +1,21 @@
 import sys
 import os
 import subprocess
+import readline
+
+
+
+def completer(text, state):
+    commands = ['echo','exit']
+    matches = [cmd + " " for cmd in commands if cmd.startswith(text)]
+
+    if state < len(matches):
+        return matches[state]
+
+    return None
+
+readline.set_completer(completer)
+readline.parse_and_bind("tab: complete")
 
 
 def main():
